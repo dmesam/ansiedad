@@ -126,4 +126,91 @@ app.mount('#app');
 
 ---
 
+## 8. Manejo del Menú de Navegación
+
+- **Menú persistente:** El menú de navegación debe ser un componente fijo y visible en toda la SPA, ya sea como barra lateral (desktop) o barra inferior/horizontal (móvil).
+- **Consistencia:** El menú debe contener enlaces a todas las secciones principales (ej: Síntomas, Introducción, Checklist, Resultados, Juego, Herramientas, QR, etc.) y debe mantenerse actualizado cuando se agreguen nuevas secciones.
+- **Iconografía:** Utiliza iconos de Font Awesome o Material Icons para cada ítem, acompañados de texto breve y legible.
+- **Accesibilidad:** Usa roles de navegación (`<nav>`), aria-labels y estados activos claros.
+- **Responsivo:** Cambia de barra lateral a barra inferior/horizontal en pantallas pequeñas.
+- **Estado activo:** Resalta la sección actual usando una clase o variable reactiva de Vue.
+- **No recargar:** La navegación debe ser interna (SPA), nunca recargar la página.
+
+### Ejemplo de Componente Vue para Menú
+
+```html
+<template>
+  <nav class="rail-menu" role="navigation" aria-label="Menú principal">
+    <a v-for="item in menu" :key="item.route" :href="item.route" class="rail-item" :class="{active: isActive(item.route)}" @click.prevent="navigate(item.route)" :title="item.title">
+      <i :class="item.icon"></i>
+      <span>{{ item.text }}</span>
+    </a>
+  </nav>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      menu: [
+        { route: '#/sintomas', icon: 'fas fa-user-md', text: 'Síntomas', title: 'Síntomas' },
+        { route: '#/introduccion', icon: 'fas fa-lightbulb', text: 'Intro', title: 'Introducción' },
+        { route: '#/checklist', icon: 'fas fa-clipboard-list', text: 'Checklist', title: 'Checklist detonantes' },
+        { route: '#/resultados', icon: 'fas fa-database', text: 'Resultados', title: 'Resultados checklist' },
+        { route: '#/juego', icon: 'fas fa-gamepad', text: 'Juego', title: 'Juego' },
+        { route: '#/herramientas', icon: 'fas fa-tools', text: 'Herramientas', title: 'Herramientas' },
+        { route: '#/qr', icon: 'fas fa-qrcode', text: 'QR', title: 'QR Code' }
+      ]
+    }
+  },
+  methods: {
+    isActive(route) {
+      return window.location.hash === route;
+    },
+    navigate(route) {
+      window.location.hash = route;
+    }
+  }
+}
+</script>
+```
+
+- **Actualiza el menú** cada vez que agregues una nueva sección.
+- **Mantén el menú como componente global** para que esté presente en toda la SPA.
+- **Adapta el CSS** para el menú según el diseño Material Design y la paleta de colores definida.
+
+---
+
+## 9. Componente Principal para Menú y Layout
+
+- **Layout global:** Crea un componente principal (por ejemplo, `App.vue`, `MainLayout.vue` o `LayoutPrincipal.vue`) que contenga el menú de navegación y el layout general de la SPA.
+- **No repetir menú:** Nunca repitas el menú en cada página o componente. El menú debe estar en el layout global y el contenido de cada sección debe renderizarse dinámicamente dentro de un `<router-view>` o `<component :is="currentView">`.
+- **Composición:** Usa slots o áreas designadas para insertar el contenido de cada sección/página.
+- **Ventajas:** Esto asegura consistencia visual, facilita el mantenimiento y evita errores de duplicación.
+
+### Ejemplo de Estructura Vue SPA
+
+```html
+<div id="app">
+  <main-layout>
+    <router-view></router-view>
+  </main-layout>
+</div>
+```
+
+```html
+<!-- MainLayout.vue -->
+<template>
+  <nav-menu />
+  <main>
+    <slot /> <!-- Aquí se renderiza el contenido de cada sección -->
+  </main>
+</template>
+```
+
+- **Actualiza solo el layout global** para cambios de menú, estilos o estructura general.
+- **Cada nueva sección** debe ser un componente hijo que se muestra dentro del layout, nunca una página HTML independiente.
+
+---
+
 **¡Sigue estas pautas para mantener la coherencia, modernidad y accesibilidad en futuras presentaciones!** 
