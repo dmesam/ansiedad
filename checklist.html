@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de detonantes de ansiedad</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -81,7 +82,7 @@
         .rail-menu {
             position: fixed;
             top: 0; left: 0; bottom: 0;
-            width: 90px;
+            width: 60px;
             background: #e0e7ff;
             display: flex;
             flex-direction: column;
@@ -101,46 +102,35 @@
             font-weight: 600;
             transition: background 0.2s, color 0.2s;
             border-radius: 12px;
-            padding: 10px 0 4px 0;
-            width: 70px;
+            padding: 6px 0 2px 0;
+            width: 48px;
         }
         .rail-item span {
-            font-size: 0.75em;
+            font-size: 0.58em;
             font-weight: 500;
-            margin-top: 2px;
+            margin-top: 1px;
         }
+        .rail-item i { font-size: 1.1em; }
         .rail-item.active, .rail-item:hover {
             background: #2563eb;
             color: #fff;
         }
         @media (max-width: 700px) {
-            .rail-menu {
-                flex-direction: row;
-                width: 100vw;
-                height: 70px;
-                left: 0; right: 0; top: 0; bottom: unset;
-                padding: 0;
-                justify-content: center;
-            }
-            .rail-item {
-                margin: 0 10px 0 10px;
-                width: 60px;
-                font-size: 1.3em;
-                padding: 8px 0 2px 0;
-            }
+            .rail-item { width: 38px; font-size: 1em; padding: 4px 0 1px 0; }
+            .rail-menu { height: 50px; }
         }
-        .checklist-container { margin-left: 110px; }
+        .checklist-container { margin-left: 70px; }
         @media (max-width: 700px) {
-            .checklist-container { margin-left: 0; margin-top: 80px; }
+            .checklist-container { margin-left: 0; margin-top: 60px; }
         }
     </style>
 </head>
 <body>
     <nav class="rail-menu">
-        <a href="body.html" class="rail-item" title="Síntomas">🧑‍⚕️<br><span>Síntomas</span></a>
-        <a href="resultados.html" class="rail-item" title="Resultados de síntomas">📊<br><span>Resultados</span></a>
-        <a href="checklist.html" class="rail-item active" title="Checklist detonantes">📝<br><span>Checklist</span></a>
-        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (SheetDB)">🔗<br><span>SheetDB</span></a>
+        <a href="body.html" class="rail-item" title="Síntomas"><i class="fas fa-user-md"></i><br><span>Síntomas</span></a>
+        <a href="resultados.html" class="rail-item" title="Resultados de síntomas"><i class="fas fa-chart-bar"></i><br><span>Resultados</span></a>
+        <a href="checklist.html" class="rail-item active" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><br><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (SheetDB)"><i class="fas fa-database"></i><br><span>SheetDB</span></a>
     </nav>
     <div class="header">
         <svg class="header-sun" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
