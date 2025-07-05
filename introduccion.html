@@ -54,9 +54,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Roboto', 'Inter', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             color: var(--md-on-background);
         }
         
@@ -160,7 +157,7 @@
             width: calc(100% - 88px);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
             padding: 24px;
@@ -363,6 +360,43 @@
                 font-size: 18px; 
             }
         }
+        
+        #versiculo-hero {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--md-primary-container);
+            position: relative;
+            z-index: 1;
+        }
+        #versiculo-hero blockquote {
+            color: var(--md-on-primary-container);
+            border-left: 5px solid var(--md-primary);
+            border-radius: 16px;
+            padding: 32px 32px 24px 32px;
+            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.10);
+            font-size: 2.1rem;
+            max-width: 700px;
+            width: 90%;
+            text-align: center;
+            background: transparent;
+        }
+        #versiculo-hero button {
+            background: none;
+            border: none;
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+        }
+        #versiculo-hero i {
+            font-size: 2.5rem;
+            color: var(--md-primary);
+        }
     </style>
 </head>
 <body>
@@ -376,7 +410,17 @@
         <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><span>QR</span></a>
     </nav>
     
-    <div class="main-content">
+    <section id="versiculo-hero" style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--md-primary-container);position:relative;">
+        <blockquote style="color:var(--md-on-primary-container);border-left:5px solid var(--md-primary);border-radius:16px;padding:32px 32px 24px 32px;box-shadow:0px 1px 3px 1px rgba(0,0,0,0.10);font-size:2.1rem;max-width:700px;width:90%;text-align:center;">
+            <span style="font-style:italic; font-size:1.1em;">Por nada estéis afanosos; antes bien, en todo, mediante oración y súplica con acción de gracias, sean dadas a conocer vuestras peticiones delante de Dios. Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestras mentes en Cristo Jesús.</span>
+            <br><span style="display:block;text-align:right;font-weight:600;margin-top:18px;font-size:1.1rem;">Filipenses 4:6-7</span>
+        </blockquote>
+        <button onclick="document.getElementById('contenido-intro').scrollIntoView({behavior:'smooth'});" style="background:none;border:none;position:absolute;bottom:32px;left:50%;transform:translateX(-50%);cursor:pointer;">
+            <i class="fas fa-chevron-down" style="font-size:2.5rem;color:var(--md-primary);"></i>
+        </button>
+    </section>
+
+    <div id="contenido-intro" class="main-content">
         <div class="content-container">
             <div class="meme-card">
                 <div class="meme-header">
@@ -393,12 +437,12 @@
                 <h2 class="intro-title">¿Me he sentido ansioso?</h2>
                 <h2 class="intro-title">Diferencias entre ansiedad e hiperactividad</h2>
             </div>
-            
+
             <div class="intro-leyenda">
                 <i class="fas fa-chart-bar"></i>
                 52% de los jóvenes y adolescentes en Colombia experimentan con frecuencia ansiedad
                 <a href="https://www.elcolombiano.com/tendencias/ansiedad-y-estres-en-adolescentes-como-actuar-a-tiempo-KL22835429" target="_blank" rel="noopener" class="leyenda-link" title="Ver fuente de la estadística">
-                    <i class="fas fa-external-link-alt"></i>
+                    Fuente <i class="fas fa-external-link-alt"></i>
                 </a>
             </div>
         </div>
