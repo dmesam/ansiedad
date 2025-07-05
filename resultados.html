@@ -3,119 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados de Ansiedad</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Resultados - Síntomas de Ansiedad</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            /* Material Design 3 Color System */
+            --md-primary: #6750A4;
+            --md-primary-container: #EADDFF;
+            --md-on-primary: #FFFFFF;
+            --md-on-primary-container: #21005D;
+            --md-secondary: #625B71;
+            --md-secondary-container: #E8DEF8;
+            --md-on-secondary: #FFFFFF;
+            --md-on-secondary-container: #1D192B;
+            --md-tertiary: #7D5260;
+            --md-tertiary-container: #FFD8E4;
+            --md-on-tertiary: #FFFFFF;
+            --md-on-tertiary-container: #31111D;
+            --md-error: #BA1A1A;
+            --md-error-container: #FFDAD6;
+            --md-on-error: #FFFFFF;
+            --md-on-error-container: #410002;
+            --md-background: #FFFBFE;
+            --md-surface: #FFFBFE;
+            --md-surface-variant: #E7E0EC;
+            --md-on-background: #1C1B1F;
+            --md-on-surface: #1C1B1F;
+            --md-on-surface-variant: #49454F;
+            --md-outline: #79747E;
+            --md-outline-variant: #CAC4D0;
+            --md-shadow: #000000;
+            --md-scrim: #000000;
+            --md-inverse-surface: #313033;
+            --md-inverse-on-surface: #F4EFF4;
+            --md-inverse-primary: #D0BCFF;
+            --md-surface-dim: #DED8E1;
+            --md-surface-bright: #FFFBFE;
+            --md-surface-container-lowest: #FFFFFF;
+            --md-surface-container-low: #F7F2FA;
+            --md-surface-container: #F3EDF7;
+            --md-surface-container-high: #ECE6F0;
+            --md-surface-container-highest: #E6E0E9;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            font-family: 'Roboto', 'Inter', sans-serif;
+            background-color: var(--md-background);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            color: var(--md-on-background);
         }
+        
         .container {
-            background: #fff;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            padding: 2rem 2.5rem;
+            background: var(--md-surface);
+            border-radius: 28px;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            padding: 24px;
             margin-top: 40px;
             max-width: 700px;
             width: 100%;
+            transition: box-shadow 0.2s ease;
         }
+        
+        .container:hover {
+            box-shadow: 
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+        }
+        
         h1 {
             text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 2rem;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--md-on-surface);
+            margin-bottom: 32px;
+            line-height: 1.2;
         }
+        
         #volver-btn {
             display: block;
-            margin: 2rem auto 0 auto;
-            background: #2563eb;
-            color: #fff;
-            font-weight: bold;
+            margin: 32px auto 0 auto;
+            background: var(--md-primary-container);
+            color: var(--md-on-primary-container);
+            font-weight: 500;
             border: none;
-            border-radius: 8px;
-            padding: 10px 24px;
+            border-radius: 20px;
+            padding: 12px 24px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
         }
+        
+        #volver-btn:hover {
+            box-shadow: 
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            transform: translateY(-1px);
+        }
+        
         @media (max-width: 600px) {
-            .container { padding: 1rem 0.5rem; }
+            .container { 
+                padding: 16px; 
+                margin-top: 24px;
+            }
+            h1 {
+                font-size: 28px;
+            }
         }
+        
         .rail-menu {
             position: fixed;
             top: 0; left: 0; bottom: 0;
-            width: 60px;
-            background: #e0e7ff;
+            width: 80px;
+            background: var(--md-surface-container);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 30px;
+            padding-top: 24px;
             z-index: 100;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
         }
+        
         .rail-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
-            color: #2563eb;
+            margin-bottom: 16px;
+            color: var(--md-on-surface-variant);
             text-decoration: none;
-            font-size: 1.6em;
-            font-weight: 600;
-            transition: background 0.2s, color 0.2s;
-            border-radius: 12px;
-            padding: 6px 0 2px 0;
-            width: 48px;
-        }
-        .rail-item span {
-            font-size: 0.45em;
+            font-size: 24px;
             font-weight: 500;
-            margin-top: 1px;
+            transition: all 0.2s ease;
+            border-radius: 16px;
+            padding: 12px 8px 8px 8px;
+            width: 56px;
+            height: 56px;
+            position: relative;
         }
-        .rail-item i { font-size: 1.1em; }
-        .rail-item.active, .rail-item:hover {
-            background: #2563eb;
-            color: #fff;
+        
+        .rail-item span {
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 4px;
+            line-height: 1.2;
         }
+        
+        .rail-item i { 
+            font-size: 20px; 
+        }
+        
+        .rail-item:hover {
+            background: var(--md-surface-container-high);
+            color: var(--md-on-surface);
+        }
+        
+        .rail-item.active {
+            background: var(--md-primary-container);
+            color: var(--md-on-primary-container);
+        }
+        
         @media (max-width: 700px) {
             .rail-menu {
                 flex-direction: row;
                 width: 100vw;
-                height: 50px;
+                height: 80px;
                 left: 0; right: 0; top: 0; bottom: unset;
-                padding: 0;
-                justify-content: center;
+                padding: 0 16px;
+                justify-content: space-around;
             }
             .rail-item {
-                margin: 0 10px 0 10px;
-                width: 38px;
-                font-size: 1em;
-                padding: 4px 0 1px 0;
-            }
-        }
-        @media (min-width: 701px) and (max-width: 1024px) {
-            .rail-menu {
-                width: 70px;
-            }
-            .rail-item {
-                width: 56px;
-                font-size: 1.2em;
+                margin: 0;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                padding: 8px 4px 4px 4px;
             }
             .rail-item span {
-                font-size: 0.65em;
+                font-size: 10px;
+            }
+            .rail-item i {
+                font-size: 18px;
             }
         }
-        .container { margin-left: 70px; }
+        
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .rail-menu {
+                width: 88px;
+            }
+            .rail-item {
+                width: 64px;
+                height: 64px;
+                font-size: 28px;
+            }
+            .rail-item span {
+                font-size: 12px;
+            }
+            .rail-item i {
+                font-size: 24px;
+            }
+        }
+        
+        .container { 
+            margin-left: 88px; 
+        }
+        
         @media (max-width: 700px) {
-            .container { margin-left: 0; margin-top: 60px; }
+            .container { 
+                margin-left: 0; 
+                margin-top: 88px; 
+            }
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--md-surface-container);
+            color: var(--md-on-surface);
+            border: none;
+            border-radius: 20px;
+            padding: 12px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .back-button:hover {
+            box-shadow: 
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -126,14 +264,13 @@
         <a href="checklist.html" class="rail-item" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><span>Checklist</span></a>
         <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (Resultados)"><i class="fas fa-database"></i><span>Resultados</span></a>
         <a href="juego.html" class="rail-item" title="Juego"><i class="fas fa-gamepad"></i><span>Juego</span></a>
+        <a href="herramientas.html" class="rail-item" title="Herramientas"><i class="fas fa-tools"></i><span>Herramientas</span></a>
         <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><span>QR</span></a>
     </nav>
     <div class="container">
-        <div style="position: absolute; top: 18px; right: 28px; z-index: 30;">
-            <a href="index.html" title="Volver" style="font-size: 1.7em; color: #2563eb; text-decoration: none; font-weight: bold; background: none; border-radius: 6px; padding: 0 8px; transition: background 0.2s; display: flex; align-items: center;">
-                <i class="fas fa-arrow-left"></i>
-            </a>
-        </div>
+        <a href="index.html" title="Volver" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h1>Resultados de Síntomas de Ansiedad</h1>
         <canvas id="grafico"></canvas>
     </div>

@@ -7,129 +7,334 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <style>
+        :root {
+            /* Material Design 3 Color System */
+            --md-primary: #6750A4;
+            --md-primary-container: #EADDFF;
+            --md-on-primary: #FFFFFF;
+            --md-on-primary-container: #21005D;
+            --md-secondary: #625B71;
+            --md-secondary-container: #E8DEF8;
+            --md-on-secondary: #FFFFFF;
+            --md-on-secondary-container: #1D192B;
+            --md-tertiary: #7D5260;
+            --md-tertiary-container: #FFD8E4;
+            --md-on-tertiary: #FFFFFF;
+            --md-on-tertiary-container: #31111D;
+            --md-error: #BA1A1A;
+            --md-error-container: #FFDAD6;
+            --md-on-error: #FFFFFF;
+            --md-on-error-container: #410002;
+            --md-background: #FFFBFE;
+            --md-surface: #FFFBFE;
+            --md-surface-variant: #E7E0EC;
+            --md-on-background: #1C1B1F;
+            --md-on-surface: #1C1B1F;
+            --md-on-surface-variant: #49454F;
+            --md-outline: #79747E;
+            --md-outline-variant: #CAC4D0;
+            --md-shadow: #000000;
+            --md-scrim: #000000;
+            --md-inverse-surface: #313033;
+            --md-inverse-on-surface: #F4EFF4;
+            --md-inverse-primary: #D0BCFF;
+            --md-surface-dim: #DED8E1;
+            --md-surface-bright: #FFFBFE;
+            --md-surface-container-lowest: #FFFFFF;
+            --md-surface-container-low: #F7F2FA;
+            --md-surface-container: #F3EDF7;
+            --md-surface-container-high: #ECE6F0;
+            --md-surface-container-highest: #E6E0E9;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: #e3edf7;
+            font-family: 'Roboto', 'Inter', sans-serif;
+            background: var(--md-background);
             margin: 0;
             padding: 0;
+            color: var(--md-on-background);
         }
+        
         .header {
-            background: #fdf3d6;
+            background: var(--md-tertiary-container);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 32px 32px 18px 32px;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
         }
+        
         .header-title {
             font-family: 'Fredoka One', 'Inter', sans-serif;
-            font-size: 2.5rem;
-            color: #7ba6d9;
+            font-size: 32px;
+            color: var(--md-on-tertiary-container);
             text-align: center;
             flex: 1;
+            line-height: 1.2;
         }
+        
         .header-sun {
             width: 60px;
             height: 60px;
         }
+        
         .header-character {
             width: 60px;
             height: 60px;
         }
+        
         .checklist-container {
-            background: #d6e6f7;
+            background: var(--md-surface-container);
             max-width: 900px;
             margin: 0 auto;
-            border-radius: 18px;
+            border-radius: 28px;
             padding: 36px 24px 32px 24px;
-            margin-top: 0;
+            margin-top: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            transition: box-shadow 0.2s ease;
         }
+        
+        .checklist-container:hover {
+            box-shadow: 
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+        }
+        
         .checklist-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px 48px;
+            gap: 20px 48px;
             width: 100%;
             max-width: 800px;
         }
+        
         .checklist-item {
             display: flex;
-            align-items: center;
-            font-size: 1.13rem;
-            color: #3a4a5a;
+            align-items: flex-start;
+            font-size: 16px;
+            color: var(--md-on-surface);
             font-weight: 500;
             letter-spacing: 0.01em;
+            line-height: 1.4;
+            padding: 12px;
+            border-radius: 16px;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
         }
+        
+        .checklist-item:hover {
+            background: var(--md-surface-container-high);
+        }
+        
         .checklist-item input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            min-height: 22px;
-            max-width: 22px;
-            max-height: 22px;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
+            max-width: 20px;
+            max-height: 20px;
             margin-right: 16px;
-            accent-color: #7ba6d9;
+            margin-top: 2px;
+            accent-color: var(--md-primary);
             vertical-align: middle;
             box-sizing: border-box;
+            border-radius: 4px;
+            cursor: pointer;
         }
+        
+        .submit-button {
+            background: var(--md-primary-container);
+            color: var(--md-on-primary-container);
+            font-weight: 500;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 32px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+        }
+        
+        .submit-button:hover {
+            box-shadow: 
+                0px 2px 6px 2px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+            transform: translateY(-1px);
+        }
+        
+        .submit-button:disabled {
+            background: var(--md-surface-variant);
+            color: var(--md-on-surface-variant);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .form-message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 500;
+            padding: 12px 16px;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .form-message.success {
+            background: var(--md-secondary-container);
+            color: var(--md-on-secondary-container);
+        }
+        
+        .form-message.error {
+            background: var(--md-error-container);
+            color: var(--md-on-error-container);
+        }
+        
         @media (max-width: 700px) {
-            .header { flex-direction: column; gap: 10px; padding: 24px 8px 12px 8px; }
-            .header-title { font-size: 1.5rem; }
-            .checklist-grid { grid-template-columns: 1fr; gap: 14px 0; }
-            .checklist-container { padding: 18px 4px 18px 4px; }
+            .header { 
+                flex-direction: column; 
+                gap: 12px; 
+                padding: 24px 16px 16px 16px; 
+            }
+            .header-title { 
+                font-size: 24px; 
+            }
+            .checklist-grid { 
+                grid-template-columns: 1fr; 
+                gap: 16px 0; 
+            }
+            .checklist-container { 
+                padding: 24px 16px 24px 16px; 
+                margin: 16px;
+            }
         }
+        
         .rail-menu {
             position: fixed;
             top: 0; left: 0; bottom: 0;
-            width: 60px;
-            background: #e0e7ff;
+            width: 80px;
+            background: var(--md-surface-container);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 30px;
+            padding-top: 24px;
             z-index: 100;
+            box-shadow: 
+                0px 1px 3px 1px rgba(0, 0, 0, 0.15),
+                0px 1px 2px 0px rgba(0, 0, 0, 0.30);
         }
+        
         .rail-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
-            color: #2563eb;
+            margin-bottom: 16px;
+            color: var(--md-on-surface-variant);
             text-decoration: none;
-            font-size: 1.6em;
-            font-weight: 600;
-            transition: background 0.2s, color 0.2s;
-            border-radius: 12px;
-            padding: 6px 0 2px 0;
-            width: 48px;
-        }
-        .rail-item span {
-            font-size: 0.58em;
+            font-size: 24px;
             font-weight: 500;
-            margin-top: 1px;
+            transition: all 0.2s ease;
+            border-radius: 16px;
+            padding: 12px 8px 8px 8px;
+            width: 56px;
+            height: 56px;
+            position: relative;
         }
-        .rail-item i { font-size: 1.1em; }
-        .rail-item.active, .rail-item:hover {
-            background: #2563eb;
-            color: #fff;
+        
+        .rail-item span {
+            font-size: 11px;
+            font-weight: 500;
+            margin-top: 4px;
+            line-height: 1.2;
         }
+        
+        .rail-item i { 
+            font-size: 20px; 
+        }
+        
+        .rail-item:hover {
+            background: var(--md-surface-container-high);
+            color: var(--md-on-surface);
+        }
+        
+        .rail-item.active {
+            background: var(--md-primary-container);
+            color: var(--md-on-primary-container);
+        }
+        
         @media (max-width: 700px) {
-            .rail-item { width: 38px; font-size: 1em; padding: 4px 0 1px 0; }
-            .rail-menu { 
-                height: 50px; 
-                width: 100%;
+            .rail-menu {
                 flex-direction: row;
+                width: 100vw;
+                height: 80px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0 16px;
                 justify-content: space-around;
-                padding-top: 8px;
             }
-            .header { margin-top: 50px; }
+            .rail-item {
+                margin: 0;
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                padding: 8px 4px 4px 4px;
+            }
+            .rail-item span {
+                font-size: 10px;
+            }
+            .rail-item i {
+                font-size: 18px;
+            }
+            .header { 
+                margin-top: 88px; 
+            }
         }
-        .checklist-container { margin-left: 0; }
+        
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .rail-menu {
+                width: 88px;
+            }
+            .rail-item {
+                width: 64px;
+                height: 64px;
+                font-size: 28px;
+            }
+            .rail-item span {
+                font-size: 12px;
+            }
+            .rail-item i {
+                font-size: 24px;
+            }
+        }
+        
+        .checklist-container { 
+            margin-left: 88px; 
+        }
+        
+        @media (max-width: 700px) {
+            .checklist-container { 
+                margin-left: 0; 
+            }
+        }
     </style>
 </head>
 <body>
+    <nav class="rail-menu">
+        <a href="index.html" class="rail-item" title="Síntomas"><i class="fas fa-user-md"></i><span>Síntomas</span></a>
+        <a href="introduccion.html" class="rail-item" title="Introducción"><i class="fas fa-lightbulb"></i><span>Intro</span></a>
+        <a href="checklist.html" class="rail-item active" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (Resultados)"><i class="fas fa-database"></i><span>Resultados</span></a>
+        <a href="juego.html" class="rail-item" title="Juego"><i class="fas fa-gamepad"></i><span>Juego</span></a>
+        <a href="herramientas.html" class="rail-item" title="Herramientas"><i class="fas fa-tools"></i><span>Herramientas</span></a>
+        <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><span>QR</span></a>
+    </nav>
 
     <div class="header">
         <svg class="header-sun" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,9 +392,9 @@
                 <label class="checklist-item"><input type="checkbox" name="pensamientos_autolesion">Has tenido pensamientos de autolesión o suicidio</label>
             </div>
             <div style="text-align:center; margin-top: 32px;">
-                <button type="submit" style="background: #2563eb; color: white; font-weight: bold; border: none; border-radius: 8px; padding: 12px 32px; font-size: 1.1em; cursor: pointer;">Enviar</button>
+                <button type="submit" class="submit-button">Enviar</button>
             </div>
-            <div id="form-message" style="text-align:center; margin-top:18px; font-weight:bold;"></div>
+            <div id="form-message" class="form-message"></div>
         </form>
         <script>
         document.getElementById('checklist-form').addEventListener('submit', async function(e) {
