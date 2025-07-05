@@ -17,6 +17,86 @@
             justify-content: center;
             align-items: center;
         }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 60px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 6px 0 2px 0;
+            width: 48px;
+        }
+        .rail-item span {
+            font-size: 0.45em;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+        .rail-item i { font-size: 1.1em; }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 50px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 38px;
+                font-size: 1em;
+                padding: 4px 0 1px 0;
+            }
+        }
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .rail-menu {
+                width: 70px;
+            }
+            .rail-item {
+                width: 56px;
+                font-size: 1.2em;
+            }
+            .rail-item span {
+                font-size: 0.65em;
+            }
+        }
+        .main-content {
+            margin-left: 70px;
+            width: calc(100% - 70px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        @media (max-width: 700px) {
+            .main-content { 
+                margin-left: 0; 
+                margin-top: 60px;
+                width: 100%;
+                min-height: calc(100vh - 60px);
+            }
+        }
         .meme-card {
             background: #fff;
             border-radius: 1.5rem;
@@ -140,25 +220,36 @@
     </style>
 </head>
 <body>
-    <div class="meme-card">
-        <div class="meme-header">
-            Vengo para el curso de manejo de la ansiedad.....
-            <br/>-- Es mañana
+    <nav class="rail-menu">
+        <a href="index.html" class="rail-item" title="Síntomas"><i class="fas fa-user-md"></i><span>Síntomas</span></a>
+        <a href="introduccion.html" class="rail-item active" title="Introducción"><i class="fas fa-lightbulb"></i><span>Intro</span></a>
+        <a href="checklist.html" class="rail-item" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (Resultados)"><i class="fas fa-database"></i><span>Resultados</span></a>
+        <a href="juego.html" class="rail-item" title="Juego"><i class="fas fa-gamepad"></i><span>Juego</span></a>
+        <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><span>QR</span></a>
+    </nav>
+    
+    <div class="main-content">
+        <div class="meme-card">
+            <div class="meme-header">
+                Vengo para el curso de manejo de la ansiedad.....
+                <br/>-- Es mañana
+            </div>
+            <div class="meme-img-container">
+                <img src="meme.avif" alt="Meme" class="meme-img">
+            </div>
         </div>
-        <div class="meme-img-container">
-            <img src="meme.avif" alt="Meme" class="meme-img">
+        <div class="intro-section">
+            <h2 class="intro-title">¿Qué es la ansiedad?</h2>
+            <h2 class="intro-title">¿Me he sentido ansioso?</h2>
         </div>
-    </div>
-    <div class="intro-section">
-        <h2 class="intro-title">¿Qué es la ansiedad?</h2>
-        <h2 class="intro-title">¿Me he sentido ansioso?</h2>
-    </div>
-    <div class="intro-leyenda">
-        <i class="fas fa-chart-bar"></i>
-        52% de los jóvenes y adolescentes en Colombia experimentan con frecuencia ansiedad
-        <a href="https://www.elcolombiano.com/tendencias/ansiedad-y-estres-en-adolescentes-como-actuar-a-tiempo-KL22835429" target="_blank" rel="noopener" class="leyenda-link" title="Ver fuente de la estadística">
-            <i class="fas fa-external-link-alt"></i>
-        </a>
+        <div class="intro-leyenda">
+            <i class="fas fa-chart-bar"></i>
+            52% de los jóvenes y adolescentes en Colombia experimentan con frecuencia ansiedad
+            <a href="https://www.elcolombiano.com/tendencias/ansiedad-y-estres-en-adolescentes-como-actuar-a-tiempo-KL22835429" target="_blank" rel="noopener" class="leyenda-link" title="Ver fuente de la estadística">
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
     </div>
 </body>
 </html> 
