@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados Checklist (SheetDB)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e3edf7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 2rem 2.5rem;
+            margin: 40px auto 0 auto;
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 2rem;
+        }
+        #grafico {
+            display: block;
+            width: 100% !important;
+            min-width: 300px;
+            max-width: 100%;
+            height: 400px !important;
+            min-height: 300px;
+            margin: 0 auto;
+        }
+        #error-msg {
+            color: #ef4444;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1rem 0.5rem; }
+            h1 { font-size: 1.2rem; }
+            #grafico {
+                height: 320px !important;
+                min-height: 200px;
+            }
+        }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 90px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 10px 0 4px 0;
+            width: 70px;
+        }
+        .rail-item span {
+            font-size: 0.75em;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 70px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 60px;
+                font-size: 1.3em;
+                padding: 8px 0 2px 0;
+            }
+        }
+        .container { margin-left: 110px; }
+        @media (max-width: 700px) {
+            .container { margin-left: 0; margin-top: 80px; }
+        }
+        #tabla-resultados table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #f8fafc;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+        }
+        #tabla-resultados th, #tabla-resultados td {
+            padding: 16px 12px;
+            text-align: left;
+        }
+        #tabla-resultados th {
+            background: #2563eb;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-bottom: 2px solid #e0e7ff;
+        }
+        #tabla-resultados td {
+            font-size: 1.05em;
+            color: #222;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #tabla-resultados tr:last-child td {
+            border-bottom: none;
+        }
+        #tabla-resultados tr:hover td {
+            background: #e0e7ff;
+        }
+        @media (max-width: 600px) {
+            #tabla-resultados th, #tabla-resultados td { padding: 10px 6px; font-size: 0.98em; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rail-menu">
+        <a href="body.html" class="rail-item" title="Síntomas">🧑‍⚕️<br><span>Síntomas</span></a>
+        <a href="resultados.html" class="rail-item" title="Resultados de síntomas">📊<br><span>Resultados</span></a>
+        <a href="checklist.html" class="rail-item" title="Checklist detonantes">📝<br><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item active" title="Resultados checklist (SheetDB)">🔗<br><span>SheetDB</span></a>
+    </nav>
+    <div class="container">
+        <h1>Resultados Checklist (SheetDB)</h1>
+        <div id="error-msg"></div>
+        <div id="tabla-resultados"></div>
+    </div>
+    <script>
+    // Nombres legibles para los síntomas (deben coincidir con los name del formulario)
+    const symptomLabels = {
+        cambios_cuerpo_emociones: 'Cambios en cuerpo/emociones',
+        baja_autoestima: 'Baja autoestima',
+        preocupacion_opinion_otros: 'Preocupación por opinión de otros',
+        soledad_aislamiento: 'Soledad/aislamiento',
+        sensibilidad_irritabilidad: 'Sensibilidad/irritabilidad',
+        dificultad_concentracion: 'Dificultad de concentración',
+        manejo_emociones_fuertes: 'Manejo de emociones fuertes',
+        inseguridad_situaciones_nuevas: 'Inseguridad en situaciones nuevas',
+        presion_notas_exito: 'Presión por notas/éxito',
+        sobrecarga_tareas: 'Sobrecarga de tareas',
+        dificultad_encajar: 'Dificultad para encajar',
+        acoso_bullying: 'Acoso escolar/ciberacoso',
+        preocupacion_futuro_estudios: 'Preocupación por futuro académico',
+        incertidumbre_futuro: 'Incertidumbre sobre el futuro',
+        problemas_casa: 'Problemas en casa',
+        falta_apoyo_padres: 'Falta de apoyo de padres',
+        presion_encajar_grupos: 'Presión por encajar en grupos',
+        dependencia_tecnologia: 'Dependencia de tecnología',
+        presion_imagen_perfecta: 'Presión por imagen perfecta',
+        abrumado_noticias: 'Abrumado por noticias',
+        mala_salud: 'Mala salud física/sueño/alimentación',
+        habitos_sedentarios: 'Hábitos sedentarios/consumo sustancias',
+        auto_medicacion: 'Auto-medicación/auto-diagnóstico',
+        pensamientos_autolesion: 'Pensamientos de autolesión/suicidio'
+    };
+    const symptomKeys = Object.keys(symptomLabels);
+
+    async function fetchSheetDB() {
+        try {
+            const res = await fetch('https://sheetdb.io/api/v1/mm4848m7hc4k1');
+            if (!res.ok) throw new Error('No se pudo obtener datos de SheetDB');
+            const data = await res.json();
+            processData(data);
+        } catch (err) {
+            document.getElementById('error-msg').textContent = 'Error al obtener datos de SheetDB.';
+        }
+    }
+
+    function processData(rows) {
+        // Contar los "Sí" de cada campo
+        const counts = {};
+        symptomKeys.forEach(key => counts[key] = 0);
+        rows.forEach(row => {
+            symptomKeys.forEach(key => {
+                if (row[key] && row[key].toLowerCase().trim() === 'sí') {
+                    counts[key]++;
+                }
+            });
+        });
+        renderTable(counts);
+    }
+
+    function renderTable(counts) {
+        // Convertir a array y ordenar de mayor a menor
+        const items = symptomKeys.map(key => ({
+            key,
+            label: symptomLabels[key],
+            count: counts[key]
+        })).filter(item => item.count > 0).sort((a, b) => b.count - a.count);
+        if (items.length === 0) {
+            document.getElementById('tabla-resultados').innerHTML = '<div style="text-align:center; color:#888; font-size:1.1em; margin-top:2em;">No hay resultados aún.</div>';
+            return;
+        }
+        let html = '<table><thead><tr><th>Detonante</th><th>Veces seleccionado</th></tr></thead><tbody>';
+        items.forEach(item => {
+            html += `<tr><td>${item.label}</td><td style="text-align:center; font-weight:700;">${item.count}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        document.getElementById('tabla-resultados').innerHTML = html;
+    }
+
+    fetchSheetDB();
+    </script>
+</body>
+</html> 

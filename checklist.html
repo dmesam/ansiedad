@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de detonantes de ansiedad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e3edf7;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: #fdf3d6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 32px 32px 18px 32px;
+        }
+        .header-title {
+            font-family: 'Fredoka One', 'Inter', sans-serif;
+            font-size: 2.5rem;
+            color: #7ba6d9;
+            text-align: center;
+            flex: 1;
+        }
+        .header-sun {
+            width: 60px;
+            height: 60px;
+        }
+        .header-character {
+            width: 60px;
+            height: 60px;
+        }
+        .checklist-container {
+            background: #d6e6f7;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 18px;
+            padding: 36px 24px 32px 24px;
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px 48px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            font-size: 1.13rem;
+            color: #3a4a5a;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .checklist-item input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            min-height: 22px;
+            max-width: 22px;
+            max-height: 22px;
+            margin-right: 16px;
+            accent-color: #7ba6d9;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
+        @media (max-width: 700px) {
+            .header { flex-direction: column; gap: 10px; padding: 24px 8px 12px 8px; }
+            .header-title { font-size: 1.5rem; }
+            .checklist-grid { grid-template-columns: 1fr; gap: 14px 0; }
+            .checklist-container { padding: 18px 4px 18px 4px; }
+        }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 90px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 10px 0 4px 0;
+            width: 70px;
+        }
+        .rail-item span {
+            font-size: 0.75em;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 70px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 60px;
+                font-size: 1.3em;
+                padding: 8px 0 2px 0;
+            }
+        }
+        .checklist-container { margin-left: 110px; }
+        @media (max-width: 700px) {
+            .checklist-container { margin-left: 0; margin-top: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rail-menu">
+        <a href="body.html" class="rail-item" title="Síntomas">🧑‍⚕️<br><span>Síntomas</span></a>
+        <a href="resultados.html" class="rail-item" title="Resultados de síntomas">📊<br><span>Resultados</span></a>
+        <a href="checklist.html" class="rail-item active" title="Checklist detonantes">📝<br><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (SheetDB)">🔗<br><span>SheetDB</span></a>
+    </nav>
+    <div class="header">
+        <svg class="header-sun" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="15" fill="#ffe066"/>
+            <g stroke="#fbbf24" stroke-width="3">
+                <line x1="30" y1="3" x2="30" y2="15"/>
+                <line x1="30" y1="45" x2="30" y2="57"/>
+                <line x1="3" y1="30" x2="15" y2="30"/>
+                <line x1="45" y1="30" x2="57" y2="30"/>
+                <line x1="12" y1="12" x2="20" y2="20"/>
+                <line x1="48" y1="12" x2="40" y2="20"/>
+                <line x1="12" y1="48" x2="20" y2="40"/>
+                <line x1="48" y1="48" x2="40" y2="40"/>
+            </g>
+        </svg>
+        <div class="header-title">
+            LISTA DE DETONANTES<br>DE ANSIEDAD
+        </div>
+        <svg class="header-character" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="30" cy="50" rx="16" ry="7" fill="#b6d4e6"/>
+            <ellipse cx="30" cy="32" rx="14" ry="18" fill="#ffe066"/>
+            <ellipse cx="30" cy="22" rx="10" ry="10" fill="#fbbf24"/>
+            <ellipse cx="24" cy="20" rx="2" ry="2" fill="#fff"/>
+            <ellipse cx="36" cy="20" rx="2" ry="2" fill="#fff"/>
+            <rect x="22" y="38" width="16" height="8" rx="4" fill="#7ba6d9"/>
+            <ellipse cx="30" cy="44" rx="4" ry="2" fill="#fff"/>
+        </svg>
+    </div>
+    <div class="checklist-container">
+        <form id="checklist-form">
+            <div class="checklist-grid">
+                <label class="checklist-item"><input type="checkbox" name="cambios_cuerpo_emociones">Sientes que los cambios en tu cuerpo o en tus emociones te abruman</label>
+                <label class="checklist-item"><input type="checkbox" name="baja_autoestima">Tienes baja autoestima o una imagen negativa de ti mismo/a</label>
+                <label class="checklist-item"><input type="checkbox" name="preocupacion_opinion_otros">Me preocupa que piensen mal de mi en el colegio, trabajo, los amigos, etc</label>
+                <label class="checklist-item"><input type="checkbox" name="soledad_aislamiento">Te sientes solo/a y aislado/a</label>
+                <label class="checklist-item"><input type="checkbox" name="sensibilidad_irritabilidad">A veces te sientes muy sensible, irritable o te frustras con facilidad</label>
+                <label class="checklist-item"><input type="checkbox" name="dificultad_concentracion">Te cuesta concentrarte</label>
+                <label class="checklist-item"><input type="checkbox" name="manejo_emociones_fuertes">Te cuesta manejar tus emociones fuertes</label>
+                <label class="checklist-item"><input type="checkbox" name="inseguridad_situaciones_nuevas">te sientes inseguro/a y paralizado/a en situaciones nuevas</label>
+                <label class="checklist-item"><input type="checkbox" name="presion_notas_exito">Sientes mucha presión por sacar buenas notas o por tener éxito en tu futuro académico y profesional</label>
+                <label class="checklist-item"><input type="checkbox" name="sobrecarga_tareas">Tienes demasiadas tareas o te cuesta adaptarte a la mayor carga académica o laboral</label>
+                <label class="checklist-item"><input type="checkbox" name="dificultad_encajar">A veces te resulta difícil encajar con tus compañeros</label>
+                <label class="checklist-item"><input type="checkbox" name="acoso_bullying">Has sufrido acoso escolar (bullying) o ciberacoso</label>
+                <label class="checklist-item"><input type="checkbox" name="preocupacion_futuro_estudios">Te preocupa que vas hacer cuando termines el colegio o la universidad</label>
+                <label class="checklist-item"><input type="checkbox" name="incertidumbre_futuro">Tienes incertidumbre sobre tu futuro (empleo, vivienda)</label>
+                <label class="checklist-item"><input type="checkbox" name="problemas_casa">Hay problemas o inestabilidad en casa</label>
+                <label class="checklist-item"><input type="checkbox" name="falta_apoyo_padres">Sientes falta de apoyo o comunicación con tus padres</label>
+                <label class="checklist-item"><input type="checkbox" name="presion_encajar_grupos">Sientes una fuerte presión por encajar en grupos de amigos</label>
+                <label class="checklist-item"><input type="checkbox" name="dependencia_tecnologia">Pasas mucho tiempo en redes sociales o usando tecnología, y sientes que dependes de ellas</label>
+                <label class="checklist-item"><input type="checkbox" name="presion_imagen_perfecta">Te sientes presionado/a por la imagen perfecta que muestran otros</label>
+                <label class="checklist-item"><input type="checkbox" name="abrumado_noticias">Te abruman las noticias negativas</label>
+                <label class="checklist-item"><input type="checkbox" name="mala_salud">Tienes mala salud física, problemas de sueño o alimentación</label>
+                <label class="checklist-item"><input type="checkbox" name="habitos_sedentarios">Tus hábitos son sedentarios o consumes alimentos procesados, alcohol, tabaco, cannabis o bebidas energéticas</label>
+                <label class="checklist-item"><input type="checkbox" name="auto_medicacion">Has considerado la auto-medicación o auto-diagnóstico de problemas de salud mental con información de internet</label>
+                <label class="checklist-item"><input type="checkbox" name="pensamientos_autolesion">Has tenido pensamientos de autolesión o suicidio</label>
+            </div>
+            <div style="text-align:center; margin-top: 32px;">
+                <button type="submit" style="background: #2563eb; color: white; font-weight: bold; border: none; border-radius: 8px; padding: 12px 32px; font-size: 1.1em; cursor: pointer;">Enviar</button>
+            </div>
+            <div id="form-message" style="text-align:center; margin-top:18px; font-weight:bold;"></div>
+        </form>
+        <script>
+        document.getElementById('checklist-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = {};
+            form.querySelectorAll('input[type=checkbox]').forEach(input => {
+                data[input.name] = input.checked ? 'Sí' : '';
+            });
+            const messageDiv = document.getElementById('form-message');
+            try {
+                const response = await fetch('https://sheetdb.io/api/v1/mm4848m7hc4k1', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data })
+                });
+                if (response.ok) {
+                    messageDiv.textContent = '¡Formulario enviado con éxito!';
+                    messageDiv.style.color = '#22c55e';
+                    form.reset();
+                } else {
+                    messageDiv.textContent = 'Ocurrió un error al enviar. Intenta de nuevo.';
+                    messageDiv.style.color = '#ef4444';
+                }
+            } catch {
+                messageDiv.textContent = 'Ocurrió un error al enviar. Intenta de nuevo.';
+                messageDiv.style.color = '#ef4444';
+            }
+        });
+        </script>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Síntomas de Ansiedad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            overflow: visible;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        .stickman-wrapper {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            margin: 0 auto;
+        }
+        .symptom-bubble {
+            position: absolute;
+            width: 140px;
+            min-height: 60px;
+            border-radius: 38% 62% 63% 37% / 45% 40% 60% 55%; /* Forma irregular */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            box-sizing: border-box;
+            line-height: 1.2;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background-size: cover;
+            background-position: center;
+            border: none;
+        }
+        .symptom-bubble.active {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.3);
+        }
+        .symptom-counter {
+            position: absolute;
+            bottom: 6px;
+            right: 12px;
+            background: rgba(255,255,255,0.7);
+            color: #222;
+            font-size: 0.9em;
+            font-weight: 600;
+            border-radius: 1em;
+            padding: 2px 8px;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .bg-orange {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g1" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23fed7aa" stop-opacity="1"/><stop offset="100%" stop-color="%23fed7aa" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g1)"/></svg>');
+        }
+        .bg-green {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g2" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23bbf7d0" stop-opacity="1"/><stop offset="100%" stop-color="%23bbf7d0" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g2)"/></svg>');
+        }
+        .bg-yellow {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g3" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23fde68a" stop-opacity="1"/><stop offset="100%" stop-color="%23fde68a" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g3)"/></svg>');
+        }
+        .bg-beige {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g4" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23fef9c3" stop-opacity="1"/><stop offset="100%" stop-color="%23fef9c3" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g4)"/></svg>');
+        }
+        .bg-gray {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g5" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23d1d5db" stop-opacity="1"/><stop offset="100%" stop-color="%23d1d5db" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g5)"/></svg>');
+        }
+        .bg-darkgray {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g6" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23e5e7eb" stop-opacity="1"/><stop offset="100%" stop-color="%23e5e7eb" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g6)"/></svg>');
+        }
+        .bg-pink {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g7" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23fbcfe8" stop-opacity="1"/><stop offset="100%" stop-color="%23fbcfe8" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g7)"/></svg>');
+        }
+        .bg-blue {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g8" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23bae6fd" stop-opacity="1"/><stop offset="100%" stop-color="%23bae6fd" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g8)"/></svg>');
+        }
+        .bg-lightblue {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g9" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23a5f3fc" stop-opacity="1"/><stop offset="100%" stop-color="%23a5f3fc" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g9)"/></svg>');
+        }
+        .bg-purple {
+            background-image: url('data:image/svg+xml;utf8,<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="g10" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="%23e9d5ff" stop-opacity="1"/><stop offset="100%" stop-color="%23e9d5ff" stop-opacity="0.3"/></radialGradient></defs><ellipse cx="100" cy="60" rx="95" ry="55" fill="url(%23g10)"/></svg>');
+        }
+
+        /* Estilos para las figuras humanas y elementos internos */
+        .human-figure {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            border: 2px solid #333;
+            border-radius: 50% 50% 0 0 / 20% 20% 0 0; /* Forma de cuerpo simplificada */
+            background-color: #fefefe;
+            margin: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 1;
+        }
+        .head {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #fefefe;
+            border: 2px solid #333;
+            position: absolute;
+            top: -40px;
+            z-index: 2;
+        }
+        .brain {
+            width: 40px;
+            height: 30px;
+            background-color: #a7f3d0; /* Verde claro */
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #333;
+            z-index: 3;
+        }
+        .heart {
+            width: 40px;
+            height: 40px;
+            background-color: #fca5a5; /* Rojo claro */
+            transform: rotate(-45deg);
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+            border: 1px solid #333;
+            z-index: 3;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            width: 40px;
+            height: 40px;
+            background-color: #fca5a5;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid #333;
+        }
+        .heart::before {
+            top: -20px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: 20px;
+        }
+        .lungs {
+            width: 70px;
+            height: 60px;
+            background-color: #90cdf4; /* Azul claro */
+            border-radius: 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px;
+            box-sizing: border-box;
+            z-index: 3;
+        }
+        .lung-left, .lung-right {
+            width: 30px;
+            height: 50px;
+            background-color: #90cdf4;
+            border-radius: 50% / 60% 60% 40% 40%;
+            border: 1px solid #333;
+        }
+        .lung-left { transform: rotate(-10deg); }
+        .lung-right { transform: rotate(10deg); }
+
+        .stomach {
+            width: 50px;
+            height: 40px;
+            background-color: #fbd38d; /* Naranja claro */
+            border-radius: 50%;
+            position: absolute;
+            top: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid #333;
+            z-index: 3;
+        }
+
+        .connection-line {
+            stroke: #6b7280;
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.7;
+            transition: stroke-width 0.2s, opacity 0.2s;
+        }
+        .connection-line.active {
+            stroke-width: 3;
+            opacity: 1;
+            stroke: #1f2937;
+        }
+        @media (max-width: 900px) {
+            .stickman-wrapper {
+                width: 100vw;
+                min-width: 0;
+                height: 400px;
+            }
+            .symptom-bubble {
+                width: 110px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .stickman-wrapper {
+                width: 100vw;
+                height: 700px;
+            }
+            .symptom-bubble {
+                position: static;
+                margin: 10px auto;
+                display: block;
+                width: 90vw;
+                border-radius: 1rem;
+            }
+        }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 90px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 10px 0 4px 0;
+            width: 70px;
+        }
+        .rail-item span {
+            font-size: 0.75em;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 70px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 60px;
+                font-size: 1.3em;
+                padding: 8px 0 2px 0;
+            }
+        }
+        .container { margin-left: 110px; }
+        @media (max-width: 700px) {
+            .container { margin-left: 0; margin-top: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rail-menu">
+        <a href="body.html" class="rail-item active" title="Síntomas">🧑‍⚕️<br><span>Síntomas</span></a>
+        <a href="resultados.html" class="rail-item" title="Resultados de síntomas">📊<br><span>Resultados</span></a>
+        <a href="checklist.html" class="rail-item" title="Checklist detonantes">📝<br><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (SheetDB)">🔗<br><span>SheetDB</span></a>
+    </nav>
+    <div class="container">
+        <div style="position: absolute; top: 18px; right: 28px; z-index: 30; display: flex; align-items: center; gap: 10px;">
+            <button id="limpiar-contadores" title="Limpiar contadores" style="background: none; border: none; cursor: pointer; font-size: 1.8em; color: #ef4444; padding: 0;">
+                🗑️
+            </button>
+            <a href="resultados.html" title="Ver resultados" style="font-size: 1.2em; color: #2563eb; text-decoration: none; font-weight: bold; background: #e0e7ff; border-radius: 6px; padding: 4px 12px; transition: background 0.2s;">Resultados</a>
+        </div>
+        <div class="main-content">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 w-full text-center">Síntomas Comunes de Ansiedad</h1>
+        </div>
+        <div class="stickman-wrapper" style="display: flex; justify-content: center; align-items: center; position: relative;">
+            <!-- Imagen central de las figuras humanas -->
+            <img id="figura-img" src="figuras-humanas.png" alt="Figuras humanas" style="display:block; margin:auto; max-width:400px; max-height:450px; position:relative; z-index:1;" />
+            <!-- SVG para las líneas de conexión -->
+            <svg id="connection-svg" width="800" height="500" style="position:absolute; left:0; top:0; pointer-events:none; z-index:2;"></svg>
+            <!-- Burbujas de síntomas -->
+            <div id="symptom-preocupacion" class="symptom-bubble bg-orange" style="top:10px; left:10px;">Preocupación excesiva</div>
+            <div id="symptom-hombros" class="symptom-bubble bg-green" style="top:0px; left:230px;">Hombros tensos</div>
+            <div id="symptom-dolores" class="symptom-bubble bg-yellow" style="top:0px; left:500px;">Dolores de cabeza</div>
+            <div id="symptom-mareos" class="symptom-bubble bg-beige" style="top:30px; left:670px;">Mareos o debilidad</div>
+            <div id="symptom-mente" class="symptom-bubble bg-gray" style="top:110px; left:670px;">Mente acelerada<br>o dificultad para concentrarse</div>
+            <div id="symptom-manos" class="symptom-bubble bg-pink" style="top:220px; left:670px;">Manos entumecidas<br>o con hormigueo</div>
+            <div id="symptom-piernas" class="symptom-bubble bg-lightblue" style="top:370px; left:670px;">Piernas temblorosas</div>
+            <div id="symptom-malestar" class="symptom-bubble bg-purple" style="top:420px; left:420px;">Malestar estomacal<br>o nerviosismo</div>
+            <div id="symptom-musculos" class="symptom-bubble bg-darkgray" style="top:420px; left:120px;">Músculos tensos</div>
+            <div id="symptom-palpitaciones" class="symptom-bubble bg-blue" style="top:370px; left:10px;">Palpitaciones</div>
+            <div id="symptom-sudoracion" class="symptom-bubble bg-yellow" style="top:220px; left:10px;">Sudoración o escalofríos</div>
+            <div id="symptom-respiracion" class="symptom-bubble bg-green" style="top:110px; left:10px;">Respiración acelerada</div>
+        </div>
+    </div>
+    <script>
+        // Definir los puntos de conexión para cada burbuja y parte del cuerpo
+        const connections = [
+            { bubble: 'symptom-preocupacion', target: 'human1-brain' },
+            { bubble: 'symptom-hombros', target: 'human1-head' },
+            { bubble: 'symptom-dolores', target: 'human1-brain' },
+            { bubble: 'symptom-mareos', target: 'human2-brain' },
+            { bubble: 'symptom-mente', target: 'human2-brain' },
+            { bubble: 'symptom-manos', target: 'human2' },
+            { bubble: 'symptom-piernas', target: 'human2' },
+            { bubble: 'symptom-malestar', target: 'human2-stomach' },
+            { bubble: 'symptom-musculos', target: 'human1' },
+            { bubble: 'symptom-palpitaciones', target: 'human1-heart' },
+            { bubble: 'symptom-sudoracion', target: 'human1' },
+            { bubble: 'symptom-respiracion', target: 'human2-lungs' },
+        ];
+
+        // Inicializar contadores
+        const symptomIds = [
+            'symptom-preocupacion',
+            'symptom-hombros',
+            'symptom-dolores',
+            'symptom-mareos',
+            'symptom-mente',
+            'symptom-manos',
+            'symptom-piernas',
+            'symptom-malestar',
+            'symptom-musculos',
+            'symptom-palpitaciones',
+            'symptom-sudoracion',
+            'symptom-respiracion'
+        ];
+        const symptomCounters = {};
+
+        // Cargar contadores desde localStorage si existen
+        function loadCounters() {
+            const saved = localStorage.getItem('ansiedad_counters');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    symptomIds.forEach(id => {
+                        symptomCounters[id] = typeof parsed[id] === 'number' ? parsed[id] : 0;
+                    });
+                } catch {
+                    symptomIds.forEach(id => { symptomCounters[id] = 0; });
+                }
+            } else {
+                symptomIds.forEach(id => { symptomCounters[id] = 0; });
+            }
+        }
+
+        // Guardar contadores en localStorage
+        function saveCounters() {
+            localStorage.setItem('ansiedad_counters', JSON.stringify(symptomCounters));
+        }
+
+        // Inicialización
+        loadCounters();
+        symptomIds.forEach(id => {
+            const bubble = document.getElementById(id);
+            if (bubble) {
+                // Crear el span del contador si no existe
+                let counterSpan = bubble.querySelector('.symptom-counter');
+                if (!counterSpan) {
+                    counterSpan = document.createElement('span');
+                    counterSpan.className = 'symptom-counter';
+                    bubble.appendChild(counterSpan);
+                }
+                counterSpan.textContent = symptomCounters[id];
+            }
+        });
+
+        function updateCounter(id) {
+            const bubble = document.getElementById(id);
+            if (bubble) {
+                const counterSpan = bubble.querySelector('.symptom-counter');
+                if (counterSpan) {
+                    counterSpan.textContent = symptomCounters[id];
+                }
+            }
+            saveCounters();
+        }
+
+        // Interactividad: resalta burbuja y línea y suma contador
+        document.querySelectorAll('.symptom-bubble').forEach(bubble => {
+            bubble.addEventListener('click', () => {
+                document.querySelectorAll('.symptom-bubble').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.connection-line').forEach(l => l.classList.remove('active'));
+                bubble.classList.add('active');
+                document.querySelectorAll(`.connection-line[data-bubble="${bubble.id}"]`).forEach(line => {
+                    line.classList.add('active');
+                });
+                // Incrementar contador
+                if (symptomCounters.hasOwnProperty(bubble.id)) {
+                    symptomCounters[bubble.id] += 1;
+                    updateCounter(bubble.id);
+                }
+            });
+        });
+
+        // Botón para limpiar contadores
+        document.getElementById('limpiar-contadores').addEventListener('click', function() {
+            symptomIds.forEach(id => {
+                symptomCounters[id] = 0;
+                updateCounter(id);
+            });
+            saveCounters();
+        });
+
+        // --- Resto del código existente (SVG, líneas, etc) ---
+        function getBubbleCenter(bubble) {
+            const rect = bubble.getBoundingClientRect();
+            const parentRect = document.querySelector('.stickman-wrapper').getBoundingClientRect();
+            return {
+                x: rect.left + rect.width / 2 - parentRect.left,
+                y: rect.top + rect.height / 2 - parentRect.top
+            };
+        }
+
+        function getElementCenter(element) {
+            const rect = element.getBoundingClientRect();
+            const parentRect = document.querySelector('.stickman-wrapper').getBoundingClientRect();
+            return {
+                x: rect.left + rect.width / 2 - parentRect.left,
+                y: rect.top + rect.height / 2 - parentRect.top
+            };
+        }
+
+        function drawLines() {
+            const svg = document.getElementById('connection-svg');
+            svg.innerHTML = '';
+            connections.forEach(conn => {
+                const bubble = document.getElementById(conn.bubble);
+                if (!bubble) return;
+                const bubbleCenter = getBubbleCenter(bubble);
+                let targetElement;
+                if (conn.target === 'human1-brain') targetElement = document.querySelector('#human1 .brain');
+                else if (conn.target === 'human1-heart') targetElement = document.querySelector('#human1 .heart');
+                else if (conn.target === 'human1-head') targetElement = document.querySelector('#human1 .head');
+                else if (conn.target === 'human1') targetElement = document.getElementById('human1');
+                else if (conn.target === 'human2-brain') targetElement = document.querySelector('#human2 .brain');
+                else if (conn.target === 'human2-lungs') targetElement = document.querySelector('#human2 .lungs');
+                else if (conn.target === 'human2-stomach') targetElement = document.querySelector('#human2 .stomach');
+                else if (conn.target === 'human2') targetElement = document.getElementById('human2');
+                if (targetElement) {
+                    const targetCenter = getElementCenter(targetElement);
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', bubbleCenter.x);
+                    line.setAttribute('y1', bubbleCenter.y);
+                    line.setAttribute('x2', targetCenter.x);
+                    line.setAttribute('y2', targetCenter.y);
+                    line.setAttribute('class', 'connection-line');
+                    line.setAttribute('data-bubble', conn.bubble);
+                    svg.appendChild(line);
+                }
+            });
+        }
+
+        window.addEventListener('load', drawLines);
+        window.addEventListener('resize', drawLines);
+    </script>
+</body>
+</html>
