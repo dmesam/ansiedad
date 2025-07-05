@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de la Torre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e3edf7;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 2rem;
+            max-width: 900px;
+            width: 97%;
+        }
+        .juego-flex {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+        .juego-img {
+            max-width: 260px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .instrucciones {
+            flex: 1 1 0;
+            min-width: 220px;
+            max-width: 420px;
+        }
+        h1 {
+            color: #2563eb;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+        .section-title {
+            color: #3a4a5a;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        ul, ol {
+            text-align: left;
+            margin: 0 auto 1.2rem auto;
+            padding-left: 1.2em;
+            color: #374151;
+            font-size: 1.08rem;
+        }
+        li { margin-bottom: 0.5em; }
+        @media (max-width: 800px) {
+            .container { padding: 1.2rem 0.5rem; }
+            .juego-flex { gap: 1.2rem; }
+            h1 { font-size: 1.3rem; }
+            .juego-img { max-width: 180px; }
+            ul, ol { font-size: 1em; }
+        }
+        @media (max-width: 600px) {
+            .juego-flex {
+                flex-direction: column;
+                align-items: center;
+            }
+            .juego-img { margin-bottom: 1.2rem; }
+        }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 60px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 6px 0 2px 0;
+            width: 48px;
+        }
+        .rail-item span {
+            font-size: 0.58em;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+        .rail-item i { font-size: 1.1em; }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 50px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 38px;
+                font-size: 1em;
+                padding: 4px 0 1px 0;
+            }
+        }
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .rail-menu {
+                width: 70px;
+            }
+            .rail-item {
+                width: 56px;
+                font-size: 1.2em;
+            }
+            .rail-item span {
+                font-size: 0.65em;
+            }
+        }
+        .container { margin-left: 70px; }
+        @media (max-width: 700px) {
+            .container { margin-left: 0; margin-top: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rail-menu">
+        <a href="index.html" class="rail-item" title="Síntomas"><i class="fas fa-user-md"></i><br><span>Síntomas</span></a>
+        <a href="checklist.html" class="rail-item" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><br><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (SheetDB)"><i class="fas fa-database"></i><br><span>SheetDB</span></a>
+        <a href="juego.html" class="rail-item active" title="Juego"><i class="fas fa-gamepad"></i><br><span>Juego</span></a>
+        <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><br><span>QR</span></a>
+    </nav>
+    <div class="container">
+        <h1>Juego de la Torre</h1>
+        <div class="juego-flex">
+            <img src="torre.png" alt="Torre de dominó" class="juego-img">
+            <div class="instrucciones">
+                <div class="section-title">Materiales:</div>
+                <ul>
+                    <li>Fichas de dominó (mínimo 21 fichas).</li>
+                    <li>Superficie plana.</li>
+                </ul>
+                <div class="section-title">Instrucciones de Construcción:</div>
+                <ol>
+                    <li><b>Inicio:</b> Coloca 2 fichas de forma vertical, separadas por una distancia que permita colocar una ficha horizontal encima.</li>
+                    <li><b>Conexión:</b> Coloca 1 ficha de forma horizontal sobre el centro de las dos fichas verticales que acabas de poner, conectándolas.</li>
+                    <li><b>Repetición:</b> Repite los pasos 1 y 2 seis veces más, construyendo hacia arriba, para formar una torre de 7 segmentos de "pilares + base horizontal".</li>
+                </ol>
+                <div class="section-title">Reglas:</div>
+                <ul>
+                    <li>Se debe usar una sola mano para la construcción.</li>
+                    <li>Al jugador al que se le caiga la torre o una parte de la torre será el elegido para participar de la siguiente actividad.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
