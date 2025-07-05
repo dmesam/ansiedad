@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Poder de la Oración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #e3edf7;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            min-width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .rail-menu {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 60px;
+            background: #e0e7ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            z-index: 100;
+        }
+        .rail-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+            border-radius: 12px;
+            padding: 6px 0 2px 0;
+            width: 48px;
+        }
+        .rail-item span {
+            font-size: 0.45em;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+        .rail-item i { font-size: 1.1em; }
+        .rail-item.active, .rail-item:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .rail-menu {
+                flex-direction: row;
+                width: 100vw;
+                height: 50px;
+                left: 0; right: 0; top: 0; bottom: unset;
+                padding: 0;
+                justify-content: center;
+            }
+            .rail-item {
+                margin: 0 10px 0 10px;
+                width: 38px;
+                font-size: 1em;
+                padding: 4px 0 1px 0;
+            }
+        }
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .rail-menu {
+                width: 70px;
+            }
+            .rail-item {
+                width: 56px;
+                font-size: 1.2em;
+            }
+            .rail-item span {
+                font-size: 0.65em;
+            }
+        }
+        .main-flex-container {
+            flex: 1 1 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 0;
+            min-width: 0;
+            width: 100vw;
+            box-sizing: border-box;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 2rem;
+            max-width: 900px;
+            width: 97%;
+            margin: 0 auto;
+            margin-left: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        @media (max-width: 900px) {
+            .container { max-width: 99vw; }
+        }
+        @media (max-width: 700px) {
+            .container { margin-left: 0; margin-top: 60px; padding: 1.2rem 0.5rem; }
+            .main-flex-container { padding-top: 16px; padding-bottom: 16px; }
+        }
+        h1 {
+            color: #2563eb;
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            margin-top: 0.5em;
+        }
+        .oracion-img {
+            display: block;
+            margin: 0 auto 2rem auto;
+            max-width: 320px;
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .intro {
+            color: #374151;
+            font-size: 1.13rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        ul.efectos {
+            color: #374151;
+            font-size: 1.08rem;
+            margin: 0 auto 1.2rem auto;
+            padding-left: 1.2em;
+            max-width: 600px;
+        }
+        ul.efectos li {
+            margin-bottom: 0.7em;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 1.3rem; }
+            .oracion-img { max-width: 200px; }
+            .intro, ul.efectos { font-size: 1em; }
+        }
+        .oracion-flex {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .cita-biblica {
+            background: #f3f4f6;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            padding: 1.2em 1.2em 1.2em 1.5em;
+            font-size: 1.08rem;
+            color: #374151;
+            font-style: italic;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+            max-width: 320px;
+            min-width: 180px;
+            margin: 0;
+            position: relative;
+        }
+        .cita-biblica:before {
+            content: "\201C";
+            font-size: 2.5em;
+            color: #2563eb;
+            position: absolute;
+            left: 10px;
+            top: 0px;
+            line-height: 1;
+        }
+        .cita-biblica .ref {
+            display: block;
+            margin-top: 1em;
+            font-size: 0.98em;
+            color: #2563eb;
+            font-style: normal;
+            font-weight: 600;
+            text-align: right;
+        }
+        @media (max-width: 900px) {
+            .oracion-flex { gap: 1.2rem; }
+            .cita-biblica { font-size: 1em; max-width: 220px; }
+        }
+        @media (max-width: 700px) {
+            .oracion-flex {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.2rem;
+            }
+            .cita-biblica {
+                max-width: 100%;
+                min-width: 0;
+                margin-bottom: 1.2rem;
+            }
+        }
+        .referencias-toggle-link {
+            display: flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 1em;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin: 2.2rem 0 0 0;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .referencias-toggle-link:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+        .referencias-toggle-link i {
+            margin-right: 0.5em;
+            font-size: 1.1em;
+            transition: transform 0.3s;
+        }
+        .referencias-toggle-link .chevron-up {
+            transform: rotate(180deg);
+        }
+        .referencias {
+            margin-top: 1.2rem;
+            padding-top: 1.5rem;
+            border-top: 1.5px solid #e5e7eb;
+            display: none;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s, max-height 0.4s;
+        }
+        .referencias.visible {
+            display: block;
+            opacity: 1;
+            max-height: 1000px;
+            transition: opacity 0.3s, max-height 0.4s;
+        }
+        .referencias-title {
+            color: #2563eb;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 1em;
+        }
+        .referencias-list {
+            list-style: disc inside;
+            color: #374151;
+            font-size: 1.01rem;
+            margin: 0;
+            padding: 0 0 0 1.2em;
+        }
+        .referencias-list li {
+            margin-bottom: 0.7em;
+        }
+        .referencias-list a {
+            color: #2563eb;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        @media (max-width: 700px) {
+            .referencias { padding-top: 1rem; }
+            .referencias-title { font-size: 1.01rem; }
+            .referencias-list { font-size: 0.97rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="rail-menu">
+        <a href="index.html" class="rail-item" title="Síntomas"><i class="fas fa-user-md"></i><span>Síntomas</span></a>
+        <a href="checklist.html" class="rail-item" title="Checklist detonantes"><i class="fas fa-clipboard-list"></i><span>Checklist</span></a>
+        <a href="resultados-checklist-sheetdb.html" class="rail-item" title="Resultados checklist (Resultados)"><i class="fas fa-database"></i><span>Resultados</span></a>
+        <a href="juego.html" class="rail-item" title="Juego"><i class="fas fa-gamepad"></i><span>Juego</span></a>
+        <a href="qr.html" class="rail-item" title="QR Code"><i class="fas fa-qrcode"></i><span>QR</span></a>
+        <a href="oracion.html" class="rail-item active" title="Oración"><i class="fas fa-hands"></i><span>Oración</span></a>
+    </nav>
+    <div class="main-flex-container">
+        <div class="container">
+            <h1>El Poder de la Oración</h1>
+            <div class="oracion-flex">
+                <img src="oracion.webp" alt="Oración" class="oracion-img">
+                <blockquote class="cita-biblica">
+                    Por nada estéis afanosos; antes bien, en todo, mediante oración y súplica con acción de gracias, sean dadas a conocer vuestras peticiones delante de Dios. Y la paz de Dios, que sobrepasa todo entendimiento, guardará vuestros corazones y vuestras mentes en Cristo Jesús
+                    <span class="ref">Filipenses 4:6-7</span>
+                </blockquote>
+            </div>
+            <div class="intro">
+                La oración es una práctica espiritual que puede tener efectos profundos en el bienestar emocional, mental y físico de una persona. A continuación, se describen algunos de los beneficios respaldados por la experiencia y la ciencia:
+            </div>
+            <ul class="efectos">
+                <li><b>Reducción de Estrés y Ansiedad:</b> Calma el sistema nervioso, disminuye el ritmo cardíaco y contrarresta los efectos fisiológicos del estrés.</li>
+                <li><b>Aumento de la Paz Interior y Optimismo:</b> Genera una sensación de calma, confianza y una perspectiva más positiva ante las adversidades.</li>
+                <li><b>Mejora del Estado de Ánimo y Resiliencia:</b> Promueve un estado emocional tranquilo y fortalece la capacidad para enfrentar dificultades.</li>
+                <li><b>Fomento de la Gratitud:</b> Ayuda a reconocer y valorar las bendiciones, mejorando la satisfacción general.</li>
+                <li><b>Mayor Empatía y Compasión:</b> Cultiva una actitud más amorosa hacia los demás.</li>
+                <li><b>Mejora de la Concentración y Atención:</b> Activa áreas cerebrales vinculadas al enfoque y la regulación emocional.</li>
+                <li><b>Posibles Modificaciones Cerebrales:</b> Puede influir en la actividad y estructura de ciertas áreas del cerebro (ej., lóbulo parietal, corteza cerebral), asociadas a la trascendencia y la concentración.</li>
+                <li><b>Reducción del Deterioro Neuronal:</b> Algunos estudios sugieren un posible efecto protector contra el envejecimiento y deterioro de las células nerviosas.</li>
+                <li><b>Conexión Espiritual:</b> Fortalece la relación con lo divino o una fuerza superior, proporcionando sentido de propósito y pertenencia.</li>
+                <li><b>Guía y Propósito:</b> Ayuda a encontrar dirección y una comprensión más profunda de la vida.</li>
+                <li><b>Fortaleza y Resistencia a la Tentación:</b> Ofrece apoyo para enfrentar desafíos morales y tomar decisiones.</li>
+                <li><b>Sensación de Protección:</b> Genera una percepción de seguridad y resguardo.</li>
+                <li><b>Beneficios Fisiológicos Indirectos:</b> La reducción del estrés y el bienestar emocional pueden impactar positivamente la salud física general y el sistema inmune.</li>
+            </ul>
+            <button class="referencias-toggle-link" id="toggleReferenciasBtn" type="button">
+                <i id="chevronIcon" class="fas fa-chevron-down"></i>
+                Mostrar referencias científicas
+            </button>
+            <div class="referencias" id="referenciasDiv">
+                <div class="referencias-title">Referencias científicas y académicas</div>
+                <ul class="referencias-list">
+                    <li>
+                        <a href="https://www.mdpi.com/2077-1444/7/1/11" target="_blank" rel="noopener">The Effect of Prayer on Patients' Health: Systematic Literature Review (MDPI)</a>
+                    </li>
+                    <li>
+                        <a href="https://www.researchgate.net/publication/338419253_A_Meta-Analysis_on_the_Relationship_Between_Prayer_and_Student_Outcomes" target="_blank" rel="noopener">A Meta-Analysis on the Relationship Between Prayer and Student Outcomes (ResearchGate)</a>
+                    </li>
+                    <li>
+                        <a href="https://ijsra.net/sites/default/files/IJSRA-2024-2136.pdf" target="_blank" rel="noopener">The neurobiological link between prayer, breath control and serotonin release (IJSRA)</a>
+                    </li>
+                    <li>
+                        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6369522/" target="_blank" rel="noopener">The effects of prayer on attention resource availability and attention bias (PMC - PubMed Central)</a>
+                    </li>
+                </ul>
+            </div>
+            <script>
+            const btn = document.getElementById('toggleReferenciasBtn');
+            const refDiv = document.getElementById('referenciasDiv');
+            const chevron = document.getElementById('chevronIcon');
+            btn.addEventListener('click', function() {
+                const visible = refDiv.classList.toggle('visible');
+                btn.childNodes[1].nodeValue = visible ? 'Ocultar referencias científicas' : 'Mostrar referencias científicas';
+                chevron.classList.toggle('chevron-up', visible);
+            });
+            </script>
+        </div>
+    </div>
+</body>
+</html> 
